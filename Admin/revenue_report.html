@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revenue Report</title>
+    <link rel="stylesheet" href="revenue.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <header>
+        <h1>Revenue Report</h1>
+        <div class="logout_container">
+            <a href="/Login/login.html" onclick="log_out()">Log Out</a>
+        </div>
+    </header>
+    <div class="main_container">
+        <div class="container">
+            <div class="dropdown">
+                <button class="tab_btn" title="Animals">Animals</button>
+                <div class="dropdown-content">
+                    <a href="Animals.html">Manage Animals</a>
+                    <div class="line"></div>
+                    <a href="enclosurereport.html">Enclosure Report</a>
+                </div>
+            </div>
+            <a href="attractions.html"><button class="tab_btn">Attractions</button></a>
+            <a href="Revenue_report.html"><button class="tab_btn">Revenue Report</button></a>
+            <a href="shop_inventory.html"><button class="tab_btn">Shop Inventory</button></a>
+            <a href="inbox.html"><button class="tab_btn">Notifications</button></a>
+
+        </div>
+        <div class="enclosure_option">
+            <select name="enclosure" id="report_type" onchange="show_report()">
+                <option value="total_revenue">Total Revenue</option>
+                <option value="gift_shop_sales">Gift Shop</option>
+                <option value="membership_sales">Membership</option>
+                <option value="tickets_sales">Tickets</option>
+            </select>
+        </div>
+        <section class="total_revenue" id="total_revenue">
+            <h2>Total Revenue</h2>
+            <div class="report_filter_container">
+                <div class="filter_container">
+                    <div class="date_filter">
+                        <label for="start_date">Start Date:</label>
+                        <input type="date" class="start_date" name="start_date">
+                    </div>
+                    <div class="date_filter">
+                        <label for="end_date">End Date:</label>
+                        <input type="date" class="end_date" name="end_date">
+                    </div>
+                    <button class="filter_btn" onclick="filter(0)">save</button>
+                    <button class="filter_btn" onclick="reset_filter(0)">reset</button>
+                </div>
+
+                <div class="filter_container">
+                    <span>Item Name</span>
+                    <input type="text" class="search_item_name" onchange="search_item(this.value , 0)">
+                    <span>Order By</span>
+                    <select class="order_by" onchange="order_by(this.value , 0)">
+                        <option value="date_of_purchase">Date of Purchase</option>
+                        <option value="item_name">Item Name</option>
+                        <option value="quantity">Quantity</option>
+                        <option value="amount">Total Amount</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="report_container">
+                <table class="animal_table">
+                    <thead>
+                        <th>Purchase ID</th>
+                        <th>Date of Purchase</th>
+                        <th>Item ID</th>
+                        <th>Item Name</th>
+                        <th>Quantity</th>
+                        <th>Total Amount</th>
+                    </thead>
+                    <tbody id="total_revenue_table">
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        <section class="gift_shop_sales" id="gift_shop_sales" hidden>
+            <h2>Gift Shop</h2>
+            <div class="report_filter_container">
+                <div class="filter_container">
+                    <div class="date_filter">
+                        <label for="start_date">Start Date:</label>
+                        <input type="date" class="start_date" name="start_date">
+                    </div>
+                    <div class="date_filter">
+                        <label for="end_date">End Date:</label>
+                        <input type="date" class="end_date" name="end_date">
+                    </div>
+                    <button class="filter_btn" onclick="filter(1)">save</button>
+                    <button class="filter_btn" onclick="reset_filter(1)">reset</button>
+                </div>
+                <div class="filter_container">
+                    <span>Item Name</span>
+                    <input type="text" class="search_item_name" onchange="search_item(this.value , 1)">
+                    <span>Order By</span>
+                    <select class="order_by" onchange="order_by(this.value , 1)">
+                        <option value="date_of_purchase">Date of Purchase</option>
+                        <option value="item_name">Item Name</option>
+                        <option value="quantity">Quantity</option>
+                        <option value="amount">Total Amount</option>
+                    </select>
+                </div>
+            </div>
+            <div class="report_container">
+                <table class="animal_table">
+                    <thead>
+                        <th>Purchase ID</th>
+                        <th>Date of Purchase</th>
+                        <th>Item ID</th>
+                        <th>Item Name</th>
+                        <th>Quantity</th>
+                        <th>Total Amount</th>
+                    </thead>
+                    <tbody id="gift_shop_sales_table">
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        <section class="membership_sales" id="membership_sales" hidden>
+            <h2>Membership</h2>
+            <div class="report_filter_container">
+                <div class="filter_container">
+                    <div class="date_filter">
+                        <label for="start_date">Start Date:</label>
+                        <input type="date" class="start_date" name="start_date">
+                    </div>
+                    <div class="date_filter">
+                        <label for="end_date">End Date:</label>
+                        <input type="date" class="end_date" name="end_date">
+                    </div>
+                    <button class="filter_btn" onclick="filter(2)">save</button>
+                    <button class="filter_btn" onclick="reset_filter(2)">reset</button>
+                </div>
+                <div class="filter_container">
+                    <span>Item Name</span>
+                    <input type="text" class="search_item_name" onchange="search_item(this.value , 2)">
+                    <span>Order By</span>
+                    <select class="order_by" onchange="order_by(this.value , 2)">
+                        <option value="date_of_purchase">Date of Purchase</option>
+                        <option value="item_name">Item Name</option>
+                        <option value="quantity">Quantity</option>
+                        <option value="amount">Total Amount</option>
+                    </select>
+                </div>
+            </div>
+            <div class="report_container">
+                <table class="animal_table">
+                    <thead>
+                        <th>Purchase ID</th>
+                        <th>Date of Purchase</th>
+                        <th>Item ID</th>
+                        <th>Item Name</th>
+                        <th>Quantity</th>
+                        <th>Total Amount</th>
+                    </thead>
+                    <tbody id="membership_sales_table">
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        <section class="ticket_sales" id="ticket_sales" hidden>
+            <h2>Tickets</h2>
+            <div class="report_filter_container">
+                <div class="filter_container">
+                    <div class="date_filter">
+                        <label for="start_date">Start Date:</label>
+                        <input type="date" class="start_date" name="start_date">
+                    </div>
+                    <div class="date_filter">
+                        <label for="end_date">End Date:</label>
+                        <input type="date" class="end_date" name="end_date">
+                    </div>
+                    <button class="filter_btn" onclick="filter(3)">save</button>
+                    <button class="filter_btn" onclick="reset_filter(3)">reset</button>
+                </div>
+                <div class="filter_container">
+                    <span>Item Name</span>
+                    <input type="text" class="search_item_name" onchange="search_item(this.value , 3)">
+                    <span>Order By</span>
+                    <select class="order_by" onchange="order_by(this.value , 3)">
+                        <option value="date_of_purchase">Date of Purchase</option>
+                        <option value="item_name">Item Name</option>
+                        <option value="quantity">Quantity</option>
+                        <option value="amount">Total Amount</option>
+                    </select>
+                </div>
+            </div>
+            <div class="report_container">
+                <table class="animal_table">
+                    <thead>
+                        <th>Purchase ID</th>
+                        <th>Date of Purchase</th>
+                        <th>Item ID</th>
+                        <th>Item Name</th>
+                        <th>Quantity</th>
+                        <th>Total Amount</th>
+                    </thead>
+                    <tbody id="ticket_sales_table">
+                    </tbody>
+                </table>
+            </div>
+        </section>
+</body>
+<script src="logout.js"></script>
+<script src="revenue_report.js"></script>
+
+<footer>
+    <div class="footer_container">
+        <div class="footer_items">
+            <h2><a href="#" class="about-us">About Us</a></h2>
+            <div class="social_media">
+                <a href="https://www.facebook.com/houstonzoo" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+                <a href="https://www.instagram.com/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://twitter.com/" target="_blank"><i class="fa-brands fa-twitter"></i></a>
+            </div>
+        </div>
+        <div class="footer_items">
+            <h2>University of Houston</h2>
+            <p>4800 Calhoun Rd.</p>
+            <p>Houston, TX</p>
+        </div>
+        <div class="footer_items" id="team_mem">
+            <h2>Team Members:</h2>
+            <p>Viet Pham</p>
+            <p>Khuong Ngo</p>
+            <p>Erica Hay</p>
+            <p>Kenia Benitez</p>
+            <p>Nicole Ospina</p>
+            <p>Ryan De Luna</p>
+        </div>
+    </div>
+</footer>
+
+</html>
